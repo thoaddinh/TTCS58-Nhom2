@@ -50,36 +50,43 @@ void swapPointer( string &a, string &b)
 string sign(string a, string b){
 	bool sign = false;
 	int l1 = a.length(), l2 = b.length();	// do dai 2 xau l1, l2
+	if(l1 > l2) sign = false;
 // neu a < b hoan vi cho nhau 
-	if(l1 < l2) {
+	else if(l1 < l2) {
 		swapPointer(a,b);
 		sign = true;
 	}
-	if(l1 = l2){
+	else if(l1 = l2){
 	for(int i = 0; i < a.length(); i++){
-	if(a[i] > b[i])	break;
-	else {
+		if(a[i] > b[i])	{
+		sign = false;
+		break;
+		}
+		else if(a[i] < b[i]) {
 		swapPointer(a,b);
 		sign = true;
-		break;}
+		break;
 		}
+	}	
 	}
+
 	string s = "";
     chuanHoa(a,b);      // chuan hoa
     int l = a.length();
     int temp = 0;
     for (int i=l-1; i>=0; i--)	{	
     b[i] = b[i] + temp;
-    if(a[i] < b[i]){
-        temp = stringToNum(a[i]) + 10 - stringToNum(b[i]);    // tinh hieu tung doi mot
+    if(a[i] >= b[i]){
+        temp = stringToNum(a[i]) - stringToNum(b[i]);    // tinh hieu tung doi mot
         s.insert(0,1,numToString(temp));         // gan gia tri tinh dc
-        temp = 1;    
+        temp = 0;    
     }
     else {
-    	temp = stringToNum(a[i]) - stringToNum(b[i]);    // tinh hieu tung doi mot
+    	temp = stringToNum(a[i]) + 10 - stringToNum(b[i]);    // tinh hieu tung doi mot
         s.insert(0,1,numToString(temp));         // gan gia tri tinh dc
-        temp = 0;  
-	}}
+        temp = 1;  
+	}
+	}
     if (sign == true)  //neu b < a them dau -
     {
         s.insert(0,1,'-');
@@ -120,8 +127,40 @@ string nhan(string a, string b)     // nhan 2 so lon
     }
     return s;
 }
+//menu nhap
+void menu(){
+	string a, b, s;
+    cout<<"Nhap a va b: "<<endl;
+    getline(cin, a);
+    getline(cin, b);
+	int chon;
+	do {
+	cout << "-------------MENU-------------------";
+	cout << "\n1.---tinh tong a + b: ----------";
+	cout << "\n2.---tinh hieu a - b: ---------";
+	cout << "\n3.---tinh nha a*b: --------";
+	cout << "\n------------------------------------\n";
+	cout << "Nhap lua chon:"; cin >> chon;
+	} while( chon < 0 || chon > 3);
+	
+	if (chon == 1)
+		{
+		s = sum(a,b);
+ 		cout<<"\nTong cua a va b : "<<s<<endl;
+		}
+	else if(chon == 2)
+		{
+		s = sign(a,b);
+    	cout<<"\nHieu cua a va b : "<<s<<endl;
+		}
+	else if(chon==3)
+		{
+		s = nhan(a,b);
+   		cout<<"\nTich cua a va b : "<<s<<endl;
+		}
+}
 int main(){
-	 string a, b, s;
+	string a, b, s;
     cout<<"Nhap a va b"<<endl;
     getline(cin, a);
     getline(cin, b);
@@ -131,6 +170,7 @@ int main(){
     cout<<"Hieu cua a va b : "<<s<<endl;
     s = nhan(a,b);
     cout<<"Tich cua a va b : "<<s<<endl;
+    menu();
     return 0; 
 }
 
