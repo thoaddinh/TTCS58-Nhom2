@@ -7,7 +7,7 @@ int stringToNum(char c){
 	return c - '0';
 }
 
-//chuyen so snag char
+//chuyen so sang char
 int numToString(int n){
 	return (char)(n + 48);
 }
@@ -49,7 +49,8 @@ void swapPointer( string &a, string &b)
 }
 string sign(string a, string b){
 	bool sign = false;
-	int l1 = a.length(), l2 = b.length();// do dai 2 xau l1, l2
+	int l1 = a.length(), l2 = b.length();	// do dai 2 xau l1, l2
+// neu a < b hoan vi cho nhau 
 	if(l1 < l2) {
 		swapPointer(a,b);
 		sign = true;
@@ -60,8 +61,8 @@ string sign(string a, string b){
 	else {
 		swapPointer(a,b);
 		sign = true;
-		break;
-	}}
+		break;}
+		}
 	}
 	string s = "";
     chuanHoa(a,b);      // chuan hoa
@@ -75,7 +76,7 @@ string sign(string a, string b){
         temp = 1;    
     }
     else {
-    	temp = stringToNum(a[i]) - stringToNum(b[i]);    // tinh hiue tung doi mot
+    	temp = stringToNum(a[i]) - stringToNum(b[i]);    // tinh hieu tung doi mot
         s.insert(0,1,numToString(temp));         // gan gia tri tinh dc
         temp = 0;  
 	}}
