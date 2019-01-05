@@ -2,6 +2,8 @@
 #include<conio.h>
 #include<math.h>
 #include<string.h>
+#include<iostream>
+using namespace std;
 #define max 100
 FILE *f;
 struct NhanVien
@@ -32,6 +34,7 @@ void sapxep(danhsach ds);
 int timMSNV(danhsach ds,int ms);
 void xoanv(danhsach ds,int ms);
 void menu();
+void sapxepn(danhsach ds);
 //======================================
 int main(){
 	danhsach ds;
@@ -39,12 +42,13 @@ int main(){
 	docfileds(ds);
 	xuatdanhsach(ds);
 	sapxep(ds);
+//	sapxepn(ds);
 	xoanv(ds,1001);
 	menu();
 }
 
-/*void docfileds(danhsach &ds)
-{	f = fopen("inputb3.txt","r");
+void docfileds(danhsach &ds)
+{	f = fopen("bai3.txt","r");
 	fscanf(f,"%d",&ds.n); //so luong nhan vien
 	for(int i=0;i<ds.n;i++)
 	{	
@@ -53,21 +57,21 @@ int main(){
 	fclose(f);
 }
 void doc1nv(nhanvien &nv)
-{	fflush(stdin);
-	fscanf(f,"%d",&nv.msnv);	//msnv
-	fflush(stdin);
-	fgets(nv.hoten,30,f);	//hotennhanvien
-	fgets(nv.chucvu,50,f);	//chuc vu
-	fflush(stdin);
+{
+	fscanf(f,"%d",&nv.msnv);
+//	fflush(f);
+//	fgets(nv.hoten,50,f);
+//	printf("\nho ten: %s",nv.hoten);	//hotennhanvien
+//	fgets(nv.chucvu,50,f);	//chuc vu
+	fscanf(f,"%s",&nv.hoten);
+	fscanf(f,"%s",&nv.chucvu);
 	fscanf(f,"%d",&nv.HSL);
-	fflush(stdin);
 	fscanf(f,"%d",&nv.HSCV);
-	fflush(stdin);
 	fscanf(f,"%d",&nv.thang);
-	fflush(stdin);
 	fscanf(f,"%d",&nv.nam);
-}*/
-void docfileds(danhsach &ds)
+	nv.luong = Luong(nv);
+}
+/*void docfileds(danhsach &ds)
 {
 	scanf("%d",&ds.n); //so luong nhan vien
 	for(int i=0;i<ds.n;i++)
@@ -90,7 +94,7 @@ void doc1nv(nhanvien &nv)
 	fflush(stdin);
 	scanf("%d",&nv.nam);
 	nv.luong = Luong(nv);
-}
+}*/
 void xuatdanhsach(danhsach ds)
 {
 	printf("\n-----------danh sach nhan vien-----------");
@@ -112,13 +116,13 @@ float Luong(nhanvien nv)
 {
 	float LCB = 150000;//Luong co ban
     nv.luong = 0;
-    nv.luong = LCB*(nv.HSL + nv.HSCV);
+  	nv.luong = LCB*(nv.HSL + nv.HSCV);
 	return nv.luong;
 }
 
 void sapxep(danhsach ds){
-	for(int i = 0; i < ds.n-1; i++)
-	for(int j = i + 1; j < ds.n; j++){
+	for(int i = 0; i < ds.n-1; i++){
+	for(int j = i + 1; j < ds.n; j++)
 		if(ds.a[i].luong > ds.a[j].luong) 
 		{
 			float t = ds.a[i].luong;
@@ -126,10 +130,23 @@ void sapxep(danhsach ds){
 			ds.a[j].luong = t ;
 		}
 	}
-	printf("\n-----------------bang luong tang dan: ");
+	printf("\n-----------------bang luong tang dan:------------- ");
 	for(int i = 0; i < ds.n; i++)
-	printf("\n%8.2f",ds.a[i].msnv,ds.a[i].luong);
+	printf("\n%8.2f",ds.a[i].luong);
 }
+/*void sapxepn(danhsach ds){
+	for(int i = 0; i < ds.n-1; i++){
+	for(int j = i + 1; j < ds.n; j++)
+		if(ds.a[i].luong > ds.a[j].luong) 
+		{
+			ds.a[ds.n] = ds.a[i];
+			ds.a[i] = ds.a[j];
+			ds.a[j] = ds.a[ds.n];
+		}
+	}
+	printf("\n-----------------bang luong tang dan:------------- ");
+	xuatdanhsach(ds);
+}*/
 int timMSNV(danhsach ds,int ms)
 {
 	for(int i=0;i<ds.n;i++)
@@ -174,6 +191,8 @@ void menu()
 	int ms,k;
 	danhsach ds;
 	nhanvien nv;
+	do{
+
 	printf("\n\t\t--------------MENU--------------");
 	printf("\n\t1.Tim nhan vien theo ma so");
 	printf("\n\t2.Bang luong cua  nhan vien tang dan");
@@ -202,6 +221,6 @@ void menu()
 			}
 		default: printf("\nkhong co chuc nang nay");
 			break;
-	}
+	}	} while(ch >0 && ch >= 3);
 }
 
