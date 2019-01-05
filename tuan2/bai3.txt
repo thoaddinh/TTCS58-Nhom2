@@ -1,0 +1,22 @@
+1
+1001
+Nguyen Van A 
+Gian doc
+3 
+4
+12
+2018
+1002
+NguyenVanB
+ketoan
+6
+5
+10
+2018
+1003
+NguyenVanC
+IT
+4
+7
+1
+2017
