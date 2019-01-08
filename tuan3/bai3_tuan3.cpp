@@ -10,10 +10,10 @@ struct thongtinKH{
 };
 thongtinKH a[max];
 fstream f;
-void them1KH(int n);
+void them1KH(int i);
+void fhienthi1KH(int i);
 //doc file thong tin khach hang
 void docfile(int &n){
-	fstream f;
 	f.open("bai3.txt",ios::in);
 	int i = 0;
 	while(!f.eof()){
@@ -28,43 +28,46 @@ void docfile(int &n){
 		i++;
 	}
 	n = i;
+	f.close();
 }
 //ham them moi khach hang
 //n: ds khach hang, k: so khach hang can them vao
 void themKH(int &n, int k){
-	fstream f;
 	int i;
 	f.open("bai3.txt",ios::out);
-	
-	for(int i = n; i <= n + k; i++)
+	for(int i = n + 1; i <= n + k; i++)
 		{	them1KH(i);
+			fhienthi1KH(i);
 			i++;
 		}
+	f<<"da ghi dc file";
 	n = i;
+	f.close();
 	}
 //them mot khach hang
-void them1KH(int n){
-	
+void them1KH(int i){
 	string s;
 	int l;
 	cout<<"\nNhap ma so khach hang: ";
 	getline(cin,s);
-	f<<a[n + 1].MKH;
-	a[n + 1].MKH = s;
+	a[i].MKH = s;
 	cout<<"\nNhap ten khach hang: ";
 	getline(cin,s);
-	a[n + 1].ten = s;
-	f<<a[n+1].ten;
+	a[i].ten = s;
 	cout<<"\nNhap so tien du torng tai khoan: ";
 	cin>>l;
-	a[n+1].soduTK = l; 
-	f<<a[n+1].soduTK;
+	a[i].soduTK = l; 
+}
+//hien thi thong tin khach hang them tren file
+void fhienthi1KH(int i){
+	f<<a[i].MKH<<endl;
+	f<<a[i].ten<<endl;
+	f<<a[i].soduTK<<endl;	
 }
 int main(){
 	int n;
 	docfile(n);
 	themKH(n,1);
-	
 }
 
 
