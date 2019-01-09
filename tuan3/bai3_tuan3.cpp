@@ -1,106 +1,82 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
+#include <conio.h>
+#include <stdio.h>
 using namespace std;
 #define max 100
-//cau truc thong tin cua mot khach hang
-struct thongtinKH{
-	string MKH;	//ma khach hang
-	string ten;	//ten khach hang
-	float soduTK;	//so du trong tai khoan 
+
+struct khachHang{
+	string MKH;	
+	string ten;	
+	float soduTK;
 };
-thongtinKH a[max];
-//cau truc thong tin giao dich
-struct giaodich{
+khachHang a[max];
+
+struct  giaoDich{
 	string MKH;
 	bool loaiGD;
 	float tienGD;
 };
-giaodich b[max];
+giaoDich b[max];
 
 fstream f;
 
-void them1KH(int i);
-void fhienthi1KH(int i);
-//doc file thong tin khach hang
-void docfile(int &n){
-	f.open("bai3.txt",ios::in);
-	int i = 0;
-	while(!f.eof()){
-		string s;
-		int l;
-		getline(f,s);
-		a[i].MKH = s;
-		getline(f,s);
-		a[i].ten = s;
-		f>>l;
-		a[i].soduTK = l;
-		i++;
-	}
-	n = i;
-	f.close();
-}
-//ham them khach hang
-//n: ds khach hang, k: so khach hang can them vao
-void themKH(int &n, int k){
-	int i;
-	f.open("bai3.txt",ios::out);
-	for(int i = n + 1; i <= n + k; i++)
-		{	them1KH(i);
-			fhienthi1KH(i);
-		}
-	n = i;
-	f.close();
-	}
-//them mot khach hang tu ban phim
-void them1KH(int i){
-	string s;
-	int l;
-	cout<<"\nNhap ma so khach hang: ";
-	getline(cin,s);
-	a[i].MKH = s;
-	cout<<"\nNhap ten khach hang: ";
-	getline(cin,s);
-	a[i].ten = s;
-	cout<<"\nNhap so tien du torng tai khoan: ";
-	cin>>l;
-	a[i].soduTK = l; 
-}
-//hien thi thong tin khach hang them tren file
-void fhienthi1KH(int i){
-	f<<a[i].MKH<<endl;
-	f<<a[i].ten<<endl;
-	f<<a[i].soduTK<<endl;	
-}
-
-//ham giao dich rut tien
-void ruttien(int i, int k){
-	if(a[i].soduTK > k){
-		cout<<"\n thuc hien giao dich rut tien";
-		a[i].soduTK = a[i].soduTK - k;
-	}
-	else cout<<"\n ko thuc hien duoc giao dich rut tien";
-}
-
-//ham giao dich gui tien
-void goitien(int i, int k){
-	cout<<"thuc hien giao dich goi tien";
-	a[i].soduTK = a[i].soduTK + k;
-}
-//in danh sach khach hang
-void inDS(int n){
-	for(int i = 0; i < n; i++)
-		cout<<a[i].MKH<<"\t"<<a[i].ten<<endl;
-}
-//in sao ke cho mot khach hang
-void menu(){
-}
-void insaoke(int i){
-	
-}
+void docfile(khachHang a[], int &n);
+void inDS(int n);
+void them1KH(int id);
+void ghifileKH(int id);
+void themKH(khachHang a[],int &n,int k);
 int main(){
 	int n;
-	docfile(n);
-	themKH(n,1);
+	docfile(a,n);
+	inDS(n);
+	themKH(a,n,1);
+	inDS(n);
+	return 0;
+}
+void docfile(khachHang a[], int &n){
+	f.open("customer.dat", ios::in);
+		int i = 0;
+		while(!f.eof()){
+		getline(f,a[i].MKH,'\t');
+		getline(f,a[i].ten,'\t');
+		f>>a[i].soduTK;
+		i++;
+		}
+		n = i - 2; // i = 4 _"2 ki tu xuong dong \n"
+		f.close();
+}
+void inDS(int n){
+	for(int i = 0; i <= n ; i++){
+	cout<<a[i].MKH<<"\t"<<a[i].ten<<"\t"<<a[i].soduTK<<endl;
+	}
+}
+void them1KH(int id){
+	cin.ignore();
+	string temp;
+	getline(cin,temp);
+	cout<<"\nNhap ma khach hang: ";
+	getline(cin,a[id].MKH);
+	cout<<"\nNhap ten khach hang: ";
+	getline(cin,a[id].ten);
+	cout<<"\nNhap so tien du trong tai khoan: ";
+	cin>>a[id].soduTK;
+}
+void ghifileKH(int id){
+	f<<a[id].MKH<<"\t"<<a[id].ten<<"\t"<<a[id].soduTK<<endl;
+}
+void themKH(khachHang a[],int &n,int k){
+	ofstream f;
+	f.open("customer.dat", fstream::app);
+	for(int i = n + 1; i <= n + k; i++){
+		them1KH(i);
+}
+	for(int i = n + 1; i <= n + k; i++){
+		ghifileKH(i);
+	}
+	n = n + k; 
+	f.close();
 }
 
 
