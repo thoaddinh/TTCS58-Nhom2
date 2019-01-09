@@ -9,7 +9,16 @@ struct thongtinKH{
 	float soduTK;	//so du trong tai khoan 
 };
 thongtinKH a[max];
+//cau truc thong tin giao dich
+struct giaodich{
+	string MKH;
+	bool loaiGD;
+	float tienGD;
+};
+giaodich b[max];
+
 fstream f;
+
 void them1KH(int i);
 void fhienthi1KH(int i);
 //doc file thong tin khach hang
@@ -30,7 +39,7 @@ void docfile(int &n){
 	n = i;
 	f.close();
 }
-//ham them moi khach hang
+//ham them khach hang
 //n: ds khach hang, k: so khach hang can them vao
 void themKH(int &n, int k){
 	int i;
@@ -38,13 +47,11 @@ void themKH(int &n, int k){
 	for(int i = n + 1; i <= n + k; i++)
 		{	them1KH(i);
 			fhienthi1KH(i);
-			i++;
 		}
-	f<<"da ghi dc file";
 	n = i;
 	f.close();
 	}
-//them mot khach hang
+//them mot khach hang tu ban phim
 void them1KH(int i){
 	string s;
 	int l;
@@ -63,6 +70,32 @@ void fhienthi1KH(int i){
 	f<<a[i].MKH<<endl;
 	f<<a[i].ten<<endl;
 	f<<a[i].soduTK<<endl;	
+}
+
+//ham giao dich rut tien
+void ruttien(int i, int k){
+	if(a[i].soduTK > k){
+		cout<<"\n thuc hien giao dich rut tien";
+		a[i].soduTK = a[i].soduTK - k;
+	}
+	else cout<<"\n ko thuc hien duoc giao dich rut tien";
+}
+
+//ham giao dich gui tien
+void goitien(int i, int k){
+	cout<<"thuc hien giao dich goi tien";
+	a[i].soduTK = a[i].soduTK + k;
+}
+//in danh sach khach hang
+void inDS(int n){
+	for(int i = 0; i < n; i++)
+		cout<<a[i].MKH<<"\t"<<a[i].ten<<endl;
+}
+//in sao ke cho mot khach hang
+void menu(){
+}
+void insaoke(int i){
+	
 }
 int main(){
 	int n;
