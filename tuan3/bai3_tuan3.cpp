@@ -5,14 +5,14 @@
 #include <stdio.h>
 using namespace std;
 #define max 100
-
+//cau truc thong tin khach hang
 struct khachHang{
 	string MKH;	
 	string ten;	
 	float soduTK;
 };
 khachHang a[max];
-
+//cau truc thong tin giao dich
 struct  giaoDich{
 	string MKH;
 	int loaiGD;
@@ -22,6 +22,8 @@ giaoDich b[max];
 
 fstream f;
 int n,k;
+
+//hàm doc danh sach kahch han tu file
 void docfile(int &n);
 void inDS(int n);
 void them1KH(int id);
@@ -34,6 +36,11 @@ int main(){
 	menu();
 	return 0;
 }
+// doc file tu tap tin customer.txt
+/*
+input: customer.txt
+output: doc du lieu vào mang a[], và truyen so luong ds vao bien n.
+*/
 void docfile(int &n){
 	f.open("customer.txt", ios::in);
 		int i = 0;
@@ -53,6 +60,7 @@ void inDS(int n){
 	cout<<a[i].MKH<<"\t"<<a[i].ten<<"\t"<<a[i].soduTK<<endl;
 	}
 }
+// nhap thong tin khach hang tu ban phim
 void them1KH(int id){
 	cin.ignore();
 	cout<<"Nhap ma khach hang: "<<endl;
@@ -62,7 +70,7 @@ void them1KH(int id){
 	cout<<"Nhap so tien du trong tai khoan: "<<endl;
 	cin>>a[id].soduTK;
 }
-
+// them khach hnag vao ds khach hang và ghi tiep tuc vào file
 void themKH(int &n,int k){
 	f.open("customer.txt",ios::app);	
 	for(int i = n + 1; i <= n + k; i++){
@@ -74,7 +82,7 @@ void themKH(int &n,int k){
 	n = n + k;
 	f.close();
 }
-//------------------------------
+//-ham thuc hien thoa tac giao dich rut tien va goi tien
 void thuchienGD(){
 	f.open("giaoDich.txt",ios::app);
 	string makh;
@@ -115,7 +123,7 @@ void thuchienGD(){
 	    cin>>tien;
 		{if(tien < a[i].soduTK){
 			a[i].soduTK = a[i].soduTK - tien;
-			f<<makh<<"\t"<<2<<"\t"<<a[i].soduTK<<endl;
+			f<<makh<<"\t"<<2<<"\t"<<tien<<endl;
 			cout<<"rut tien thanh cong :"<<endl;
 			break;
 		}
